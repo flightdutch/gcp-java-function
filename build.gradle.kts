@@ -33,3 +33,11 @@ java {
         languageVersion.set(JavaLanguageVersion.of(17))
     }
 }
+
+// ... ваші попередні налаштування (plugins, application, java) ...
+
+tasks.withType<Jar> {
+    manifest {
+        attributes["Main-Class"] = "com.example.App"
+    }
+}
