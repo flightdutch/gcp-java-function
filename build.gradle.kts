@@ -34,6 +34,12 @@ java {
     }
 }
 
+jar {
+    manifest {
+        attributes["Main-Class"]: "com.example.App"
+    }
+}
+
 tasks.withType<Jar> {
     manifest {
         attributes["Main-Class"] = "com.example.App"
