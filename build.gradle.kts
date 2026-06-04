@@ -34,10 +34,10 @@ java {
     }
 }
 
-// ... ваші попередні налаштування (plugins, application, java) ...
-
 tasks.withType<Jar> {
     manifest {
         attributes["Main-Class"] = "com.example.App"
     }
+    // Цей рядок гарантує, що ВСІ скомпіловані класи потраплять в JAR
+    from(sourceSets.main.get().output)
 }
