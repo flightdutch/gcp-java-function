@@ -1,14 +1,15 @@
+
+repositories {
+    // Репозиторій для завантаження залежностей (якщо вони знадобляться в майбутньому)
+    mavenCentral()
+}
+
 plugins {
     // Підключаємо плагин для роботи з Java
     java
     id("com.github.johnrengelman.shadow") version "8.1.1" // Перевірте сумісність з вашою версією Gradle
     // Плагин application дозволяє легко запускати додаток через Gradle
     application
-}
-
-repositories {
-    // Репозиторій для завантаження залежностей (якщо вони знадобляться в майбутньому)
-    mavenCentral()
 }
 
 dependencies {
