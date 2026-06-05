@@ -2,7 +2,6 @@ name: Java CI/CD to GCP Artifact Registry
 
 on:
   push:
-    # Оновлено під ваші реальні гілки оточень
     branches: [ "test", "develop", "uat", "main" ]
 
 env:
@@ -16,21 +15,19 @@ jobs:
     environment: ${{ github.ref_name }}
 
     steps:
-    # 1. Робимо checkout коду (потрібен, щоб GitHub підхопив контекст репозиторію)
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    # 2. Авторизуємося в Google Cloud за допомогою вашого універсального SA
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v2
       with:
         credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-    # 3. Деплоїмо тестовий веб-додаток Boxboat безпосередньо з Docker Hub
-    - name: Deploy Boxboat Test Image to Cloud Run
+    # Деплоїмо той самий образ, який успішно піднявся у вас локально
+    - name: Deploy Verified Google Hello Image
       run: |
         gcloud run deploy ${{ env.IMAGE_NAME }} \
-          --image=docker.io/boxboat/hello-world-webapp:latest \
+          --image=gcr.io/cloudrun/hello:latest \
           --region=${{ env.REGION }} \
           --service-account=${{ secrets.UNIVERSAL_SA_EMAIL }} \
           --allow-unauthenticated
