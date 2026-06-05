@@ -7,7 +7,6 @@ repositories {
 plugins {
     // Підключаємо плагин для роботи з Java
     java
-    id("com.github.johnrengelman.shadow") version "8.1.1" // Перевірте сумісність з вашою версією Gradle
     // Плагин application дозволяє легко запускати додаток через Gradle
     application
 }
@@ -18,7 +17,7 @@ dependencies {
     compileOnly("com.google.cloud.functions:functions-framework-api:1.1.0")
 
     // САМЕ ЦЕЙ пакет потрібен для локального запуску та запуску в Docker контейнерах
-    implementation("com.google.cloud.functions:java-function-invoker:1.3.1")
+    implementation("com.google.cloud.functions:java-function-invoker:1.4.1")
 
     // Залишаємо JUnit для тестів, якщо є
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
