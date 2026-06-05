@@ -16,9 +16,6 @@ dependencies {
     // Додаємо інструментарій Google Functions API - Офіційне API для написання функцій
     compileOnly("com.google.cloud.functions:functions-framework-api:1.1.0")
 
-    // САМЕ ЦЕЙ пакет потрібен для локального запуску та запуску в Docker контейнерах
-    implementation("com.google.cloud.functions:java-function-invoker:1.4.1")
-
     // Залишаємо JUnit для тестів, якщо є
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
