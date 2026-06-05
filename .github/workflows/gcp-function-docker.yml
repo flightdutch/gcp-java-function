@@ -7,7 +7,7 @@ on:
 env:
   PROJECT_ID: new-best-analyzer
   REGION: europe-west3
-  REPOSITORY: analyzer-docker-repo # Name of your Artifact Registry repository
+  REPOSITORY: functions-test # Name of your Artifact Registry repository
   IMAGE_NAME: java-run-function
 
 jobs:
