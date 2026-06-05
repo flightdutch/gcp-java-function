@@ -14,4 +14,5 @@ ADD https://repo1.maven.org/maven2/com/google/cloud/functions/functions-framewor
 EXPOSE 8080
 
 # Start the Google Functions Framework Invoker
-CMD ["java", "-cp", "app.jar:functions-framework-api.jar", "com.google.cloud.functions.invoker.Runner", "--target", "com.example.App"]
+# Added "--port" parameter that dynamically reads the $PORT variable from Cloud Run
+CMD ["sh", "-c", "java -cp app.jar:functions-framework-api.jar com.google.cloud.functions.invoker.Runner --target com.example.App --port ${PORT:-8080}"]

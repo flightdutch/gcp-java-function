@@ -8,8 +8,8 @@ import java.io.IOException;
 
 public class App implements HttpFunction {
     @Override
-    public void service(HttpRequest request, HttpResponse response) throws IOException {
+    public void service(HttpRequest request, HttpResponse response) throws Exception {
         BufferedWriter writer = response.getWriter();
-        writer.write("Hello from Java App deployed via GitHub Actions to GCP Cloud Run Functions!");
+        writer.write("Hello from Cloud Run Docker Container!");
     }
 }
