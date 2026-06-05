@@ -34,7 +34,7 @@ jobs:
 
     # 1. Build the JAR file locally
     - name: Build with Gradle
-      run: ./gradlew clean build
+      run: ./gradlew clean shadowJar
 
     # 6. Upload the generated JAR file as a GitHub artifact
     - name: Upload Build Artifact
