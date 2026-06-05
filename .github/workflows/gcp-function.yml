@@ -60,4 +60,5 @@ jobs:
           --trigger-http \
           --allow-unauthenticated \
           --region=europe-west3 \
-          --source=.
+          --source=. \
+          --service-account=${{ secrets.UNIVERSAL_SA_EMAIL }}
