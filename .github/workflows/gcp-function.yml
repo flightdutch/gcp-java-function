@@ -1,17 +1,15 @@
-name: Java CI with Gradle
+name: Java CI/CD to GCP Cloud Run Functions
 
 on:
   push:
     branches: [ "main", "master" ]
-  pull_request:
-    branches: [ "main", "master" ]
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-    # 1. Check out the repository code onto the runner
+    # 1. Clone repo onto runner
     - name: Checkout repository
       uses: actions/checkout@v4
 
@@ -30,9 +28,9 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    # 5. Compile and build the project (generates JAR file in build/libs/)
+    # 5. Clean/build the project (generates JAR file in build/libs/)
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew clean build
 
     # 6. Upload the generated JAR file as a GitHub artifact
     - name: Upload Build Artifact
@@ -41,3 +39,25 @@ jobs:
         name: java-app-jar                      # Name of the artifact download
         path: build/libs/*.jar                  # Path to the compiled JAR file(s)
         retention-days: 5                       # Optional: How long to keep the artifact (in days)
+
+    # 7. Google Cloud auth
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+    # 8. runner: gcloud CLI config
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+
+    # 9. Deploy App onto Cloud Run functions
+    - name: Deploy to Cloud Run Functions
+      run: |
+        gcloud functions deploy java-run-function \
+          --gen2 \
+          --runtime=java17 \
+          --entry-point=com.example.App \
+          --trigger-http \
+          --allow-unauthenticated \
+          --region=europe-west3 \
+          --source=.

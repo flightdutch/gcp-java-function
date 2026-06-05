@@ -1,18 +1,15 @@
 package com.example;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import com.google.cloud.functions.HttpFunction;
+import com.google.cloud.functions.HttpRequest;
+import com.google.cloud.functions.HttpResponse;
+import java.io.BufferedWriter;
+import java.io.IOException;
 
-public class App {
-    public static void main(String[] args) {
-        System.out.println("=========================================");
-        System.out.println("Привіт! Простий Java + Gradle додаток працює!");
-
-        // Додамо трохи логіки: виведемо поточний час
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-
-        System.out.println("Поточна дата та час: " + now.format(formatter));
-        System.out.println("=========================================");
+public class App implements HttpFunction {
+    @Override
+    public void service(HttpRequest request, HttpResponse response) throws IOException {
+        BufferedWriter writer = response.getWriter();
+        writer.write("Hello from Java App deployed via GitHub Actions to GCP Cloud Run Functions!");
     }
 }

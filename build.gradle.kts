@@ -12,6 +12,12 @@ repositories {
 
 dependencies {
     // Для простого прикладу сторонні бібліотеки не потрібні
+    // Додаємо інструментарій Google Functions API
+    compileOnly("com.google.cloud.functions:functions-framework-api:1.1.0")
+
+    // Залишаємо JUnit для тестів, якщо є
+    testImplementation(platform("org.junit:junit-bom:5.10.0"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
 }
 
 testing {
@@ -41,3 +47,4 @@ tasks.withType<Jar> {
     // Цей рядок гарантує, що ВСІ скомпіловані класи потраплять в JAR
     from(sourceSets.main.get().output)
 }
+
