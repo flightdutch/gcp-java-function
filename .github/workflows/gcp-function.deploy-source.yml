@@ -55,7 +55,6 @@ jobs:
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
 
-
     # 9. Deploy App onto Cloud Run functions using TF-resources
     - name: Deploy to Cloud Run Functions using TF Resources
       run: |
@@ -68,6 +67,6 @@ jobs:
           --source=build/libs \
           --trigger-http \
           --allow-unauthenticated \
-          --service-account=${{ secrets.UNIVERSAL_SA_EMAIL }} \
+          --service-account="${{ env.WORKSPACE }}-runtime-backend@${{ env.PROJECT_ID }}.iam.gserviceaccount.com" \
           --stage-bucket="${{ env.PROJECT_ID }}-sc-functions-${{ env.WORKSPACE }}" \
           --docker-repository="projects/${{ env.PROJECT_ID }}/locations/${{ env.REGION }}/repositories/functions-${{ env.WORKSPACE }}"
