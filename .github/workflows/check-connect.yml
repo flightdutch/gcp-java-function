@@ -1,0 +1,41 @@
+name: Test GCP Connection
+
+# Allows manual trigger via GitHub UI, disables automatic runs
+on:
+  workflow_dispatch:
+
+jobs:
+  test-connection:
+    name: Test Auth and Connect
+    runs-on: ubuntu-latest
+
+    env:
+      PROJECT_ID: "new-best-analyzer"
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    # 1. GCP-Authenticate: Service Account
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+    # 2. Setup gcloud CLI on the runner
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+
+    # 3. Check access (project-info request/answer)
+    - name: Verify GCP Project Access
+      run: |
+        echo "=== Check: Active account ==="
+        gcloud auth list
+
+        echo "=== Check: connect to project ${{ env.PROJECT_ID }} ==="
+        gcloud projects describe ${{ env.PROJECT_ID }} --format="value(name,projectNumber)"
+
+        echo "=== Check: availability Artifact Registry ==="
+        gcloud artifacts repositories list --project=${{ env.PROJECT_ID }} --limit=3
+
+        echo "=== Connect is success! Access to the ${{ env.PROJECT_ID }} is. ==="
