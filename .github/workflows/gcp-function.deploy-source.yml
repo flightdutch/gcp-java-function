@@ -11,6 +11,7 @@ jobs:
     env:
       PROJECT_ID: "new-best-analyzer"
       REGION: "europe-west3" # Вкажіть ваш регіон
+      WORKSPACE: "test"
 
     steps:
     # 1. Clone repo onto runner
@@ -69,5 +70,5 @@ jobs:
           --allow-unauthenticated \
           --service-account=${{ secrets.UNIVERSAL_SA_EMAIL }} \
           # GCP-infra: link to terraform-build resources:
-          --stage-bucket="${{ env.PROJECT_ID }}-sc-functions-${{ github.ref_name }}" \
-          --docker-repository="projects/${{ env.PROJECT_ID }}/locations/${{ env.REGION }}/repositories/functions-${{ github.ref_name }}"
+          --stage-bucket="${{ env.PROJECT_ID }}-sc-functions-${{ env.WORKSPACE }}" \
+          --docker-repository="projects/${{ env.PROJECT_ID }}/locations/${{ env.REGION }}/repositories/functions-${{ env.WORKSPACE }}"
