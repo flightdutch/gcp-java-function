@@ -1,4 +1,4 @@
-name: Test GCP Connection
+name: Test Runner env and GCP Connection
 
 # Allows manual trigger via GitHub UI, disables automatic runs
 on:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   test-connection:
-    name: Test Auth and Connect
+    name: Test github runner env and GCP Auth and Connect
     runs-on: ubuntu-latest
 
     env:
