@@ -69,6 +69,5 @@ jobs:
           --trigger-http \
           --allow-unauthenticated \
           --service-account=${{ secrets.UNIVERSAL_SA_EMAIL }} \
-          # GCP-infra: link to terraform-build resources:
           --stage-bucket="${{ env.PROJECT_ID }}-sc-functions-${{ env.WORKSPACE }}" \
           --docker-repository="projects/${{ env.PROJECT_ID }}/locations/${{ env.REGION }}/repositories/functions-${{ env.WORKSPACE }}"
