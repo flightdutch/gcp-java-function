@@ -12,6 +12,9 @@ jobs:
       PROJECT_ID: "new-best-analyzer"
       REGION: "europe-west3" # Вкажіть ваш регіон
       WORKSPACE: "test"
+      RUNTIME_SA: "runtime-backend-${{ env.WORKSPACE }}@${{ env.PROJECT_ID }}.iam.gserviceaccount.com"
+      DOCKER_REPO: "projects/${{ env.PROJECT_ID }}/locations/${{ env.REGION }}/repositories/functions-${{ env.WORKSPACE }}"
+      STAGE_BACKET: "${{ env.PROJECT_ID }}-sc-functions-${{ env.WORKSPACE }}"
 
     steps:
     # 1. Clone repo onto runner
@@ -67,6 +70,6 @@ jobs:
           --source=build/libs \
           --trigger-http \
           --allow-unauthenticated \
-          --service-account="${{ env.WORKSPACE }}-runtime-backend@${{ env.PROJECT_ID }}.iam.gserviceaccount.com" \
-          --stage-bucket="${{ env.PROJECT_ID }}-sc-functions-${{ env.WORKSPACE }}" \
-          --docker-repository="projects/${{ env.PROJECT_ID }}/locations/${{ env.REGION }}/repositories/functions-${{ env.WORKSPACE }}"
+          --service-account="${{ env.RUNTIME_SA }}" \
+          --stage-bucket="${{ STAGE_BACKET }}" \
+          --docker-repository="${{ env.DOCKER_REPO }}"
