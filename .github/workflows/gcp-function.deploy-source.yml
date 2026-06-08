@@ -12,9 +12,6 @@ jobs:
       PROJECT_ID: "new-best-analyzer"
       REGION: "europe-west3" # Вкажіть ваш регіон
       WORKSPACE: "test"
-      RUNTIME_SA: "runtime-backend-${{ env.WORKSPACE }}@${{ env.PROJECT_ID }}.iam.gserviceaccount.com"
-      DOCKER_REPO: "projects/${{ env.PROJECT_ID }}/locations/${{ env.REGION }}/repositories/functions-${{ env.WORKSPACE }}"
-      STAGE_BACKET: "${{ env.PROJECT_ID }}-sc-functions-${{ env.WORKSPACE }}"
 
     steps:
     # 1. Clone repo onto runner
@@ -60,6 +57,10 @@ jobs:
 
     # 9. Deploy App onto Cloud Run functions using TF-resources
     - name: Deploy to Cloud Run Functions using TF Resources
+      env:
+        RUNTIME_SA: "runtime-backend-${{ env.WORKSPACE }}@${{ env.PROJECT_ID }}.iam.gserviceaccount.com"
+        DOCKER_REPO: "projects/${{ env.PROJECT_ID }}/locations/${{ env.REGION }}/repositories/functions-${{ env.WORKSPACE }}"
+        STAGE_BACKET: "${{ env.PROJECT_ID }}-sc-functions-${{ env.WORKSPACE }}"
       run: |
         gcloud functions deploy java-run-function \
           --gen2 \
@@ -71,5 +72,5 @@ jobs:
           --trigger-http \
           --allow-unauthenticated \
           --service-account="${{ env.RUNTIME_SA }}" \
-          --stage-bucket="${{ STAGE_BACKET }}" \
+          --stage-bucket="${{ env.STAGE_BACKET }}" \
           --docker-repository="${{ env.DOCKER_REPO }}"
